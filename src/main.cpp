@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WiFiClient.h>
+// #include "pico/multicore.h"
+
 
 
 const char* ssid = "WhyFly";      // Set here thine SSID
@@ -45,7 +47,7 @@ void setup() {
   // Serial.begin(9600);
   Serial1.setRX(RX_PIN);
   Serial1.setTX(TX_PIN);
-  Serial1.begin(1000000);
+  Serial1.begin(115200*2);
   delay(1000);
   
   pinMode(LED_BUILTIN, OUTPUT);
@@ -62,10 +64,14 @@ void setup() {
   server.begin(); // Start the server
 
   connect_to_client();
+
+  // multicore_launch_function1(core1_entry, NULL, true);
 }
 
 
 void readSerialData() {
+
+  // Serial.println(Serial1.available());
 
   if (Serial1.available()) {
 
